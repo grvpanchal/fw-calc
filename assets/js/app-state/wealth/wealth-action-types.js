@@ -1,0 +1,1 @@
+export const UPDATE_WEALTH = 'UPDATE_WEALTH';

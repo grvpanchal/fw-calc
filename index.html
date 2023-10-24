@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wealth Calculator</title>
+  <link rel="stylesheet" href="https://unpkg.com/chota@latest">
+  <script>
+    globalThis.process = {
+      env: {
+        NODE_ENV: 'development',
+      },
+    };
+  </script>
+  <script type="importmap">
+        {
+          "imports": {
+            "lit-element": "https://unpkg.com/lit-element@latest/lit-element.js?module",
+            "chota-element": "./assets/js/mixins/chota-element.js?module",
+            "redux": "https://unpkg.com/redux@latest/es/redux.js?module",
+            "redux-saga": "https://unpkg.com/redux-saga@1.2.1/dist/redux-saga-core.esmodules-browsers.js?module",
+            "redux-persist": "https://unpkg.com/redux-persist@6.0.0/es/index.js?module",
+            "redux-persist/lib/storage": "https://unpkg.com/redux-persist@6.0.0/es/storage/index.js?module",
+            "redux-saga/effects": "https://unpkg.com/redux-saga@1.2.1/dist/redux-saga-effects.esmodules-browsers.js?module",
+            "style-shelter": "https://unpkg.com/style-shelter@0.3.0/style-shelter.js",
+            "reselect": "https://unpkg.com/reselect@latest/reselect.js?module",
+            "pwa-helpers": "https://unpkg.com/pwa-helpers@latest/pwa-helpers.js?module"
+          }
+        }
+      </script>
+  <script type="module" src="./assets/js/app-shell.js">
+  </script>
+</head>
+
+<body>
+  <app-shell></app-shell>
+</body>
+
+</html>
