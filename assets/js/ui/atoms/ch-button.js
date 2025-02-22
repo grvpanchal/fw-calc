@@ -14,6 +14,7 @@ class Button extends ChotaElement {
       disabled: Boolean,
     };
   }
+
   render() {
     return html`
       <button type="button" class="button ${this.variant} ${this.color}" ?disabled=${this.disabled}><slot></slot></button>
@@ -21,4 +22,4 @@ class Button extends ChotaElement {
   }
 }
 
-customElements.define("ch-button", Button);
+customElements.define('ch-button', Button);

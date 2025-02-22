@@ -15,6 +15,7 @@ class Input extends ChotaElement {
       disabled: Boolean,
     };
   }
+
   render() {
     return html`
       <input type=${this.type} class="button ${this.variant} ${this.color}" ?disabled=${this.disabled} .value=${this.value}/>
@@ -22,4 +23,4 @@ class Input extends ChotaElement {
   }
 }
 
-customElements.define("ch-input", Input);
+customElements.define('ch-input', Input);

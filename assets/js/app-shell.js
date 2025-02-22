@@ -11,7 +11,7 @@ import './ui/molecules/app-input-entry.js';
 import './ui/molecules/app-tabs.js';
 import './ui/organisms/fw-logo.js';
 
-class AppShell extends connect(store)(LitElement) {ß
+class AppShell extends connect(store)(LitElement) {
   static get properties() {
     return {
       pageTitle: { type: String },
@@ -22,9 +22,10 @@ class AppShell extends connect(store)(LitElement) {ß
       assets: { type: String },
       liabilites: { type: String },
       activeBalanceSheet: { type: String },
-      dateIndex: { type: Number }
+      dateIndex: { type: Number },
     };
   }
+
   stateChanged(state) {
     this.appState = state;
     this.incomes = getIncomes(state);
@@ -37,7 +38,7 @@ class AppShell extends connect(store)(LitElement) {ß
     console.log(this.appState.wealth);
     // localStorage.setItem('appState', JSON.stringify(this.appState));
   }
-  
+
   firstUpdated() {
     const action = updateWealth(this.appState.accountStatement);
     store.dispatch(action);
@@ -50,6 +51,7 @@ class AppShell extends connect(store)(LitElement) {ß
     this.dateIndex = 0;
     this._input = {};
   }
+
   render() {
     const tabs = [
       {
@@ -60,7 +62,7 @@ class AppShell extends connect(store)(LitElement) {ß
         id: 'expenses',
         label: 'Expenses',
         isActive: this.activeBalanceSheet === 'expenses' ? 'active' : '',
-      }
+      },
     ];
 
     return html`
@@ -98,7 +100,7 @@ class AppShell extends connect(store)(LitElement) {ß
                 @input=${this.rangeHandler}
                 id="myRange">
             </div>
-            <app-tabs .tabs=${tabs} @tabSelect=${(e) => this.activeBalanceSheet = e.detail.id} ></app-tabs>
+            <app-tabs .tabs=${tabs} @tabSelect=${(e) => { this.activeBalanceSheet = e.detail.id; }} ></app-tabs>
             <br />
             ${this.activeBalanceSheet === 'income' ? html`
             <fieldset>
@@ -126,8 +128,7 @@ class AppShell extends connect(store)(LitElement) {ß
             <br />
             <fieldset>
               <legend>Housing Liability</legend>
-              ${this.housingExpenses && this.housingExpenses.length && this.housingExpenses.map((housingExpense) =>
-            (html`
+              ${this.housingExpenses && this.housingExpenses.length && this.housingExpenses.map((housingExpense) => (html`
               <p>
                 <label for="${housingExpense.name}">${housingExpense.name}</label>
                 <input id="${housingExpense.name}" value="${housingExpense.amount}" type="text">
@@ -138,8 +139,7 @@ class AppShell extends connect(store)(LitElement) {ß
             <br />
             <fieldset>
               <legend>liability Expenses</legend>
-              ${this.liabilityExpenses && this.liabilityExpenses.length && this.liabilityExpenses.map((liabilityExpense) =>
-            (html`
+              ${this.liabilityExpenses && this.liabilityExpenses.length && this.liabilityExpenses.map((liabilityExpense) => (html`
               <p>
                 <label for="${liabilityExpense.name}">${liabilityExpense.name}</label>
                 <input id="${liabilityExpense.name}" value="${liabilityExpense.amount}" type="text">
@@ -207,6 +207,7 @@ class AppShell extends connect(store)(LitElement) {ß
       </div>
     `;
   }
+
   rangeHandler(e) {
     this.dateIndex = Number(e.target.value);
   }

@@ -1,16 +1,12 @@
 import { LitElement, html } from 'lit-element';
 import { connect } from 'pwa-helpers';
 import { store } from '../app-state/store.js';
-import {
-  addTodo,
-  updateTodoStatus,
-} from '../app-state/actions.js';
 
 class TodoView extends connect(store)(LitElement) {
   static get properties() {
     return {
       todos: { type: Array },
-      task: { type: String }
+      task: { type: String },
     };
   }
 
@@ -52,22 +48,21 @@ class TodoView extends connect(store)(LitElement) {
         </button>
       </div>
       <div class="todos-list">
-        ${
-          this.todos.map(
-            todo => html`
-              <div class="todo-item">
-                <input 
-                  type="checkbox"
-                  id="${(todo.id)}"
-                  name="${todo.id}"
-                  ?checked="${todo.isComplete}"
-                  @change="${() => this.updateTodoStatus(todo, !todo.isComplete)}"
-                  >
-                <label class="${todo.isComplete ? 'complete' : ''}" for="${(todo.id)}">${todo.task}</label>
-              </div>
-            `
-          )
-        }
+        ${this.todos.map(
+    (todo) => html`
+      <div class="todo-item">
+        <input 
+          type="checkbox"
+          id="${(todo.id)}"
+          name="${todo.id}"
+          ?checked="${todo.isComplete}"
+          @change="${() => this.updateTodoStatus(todo, !todo.isComplete)}"
+          >
+        <label class="${todo.isComplete ? 'complete' : ''}" for="${(todo.id)}">${todo.task}</label>
+      </div>
+            `,
+  )
+}
       </div>
     `;
   }
@@ -90,7 +85,7 @@ class TodoView extends connect(store)(LitElement) {
   }
 
   updateTodoStatus(updatedTodo, isComplete) {
-    store.dispatch(updateTodoStatus(updatedTodo, isComplete));
+    this.store.dispatch(updateTodoStatus(updatedTodo, isComplete));
   }
 }
 

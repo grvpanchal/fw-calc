@@ -13,11 +13,10 @@ class InputEntry extends ChotaElement {
 
   constructor() {
     super();
-    this.loadId = this.id ? this.id : this.label || '' + Math.random();
+    this.loadId = this.id ? this.id : this.label || `${Math.random()}`;
   }
 
   render() {
-    
     return html`
       <label for="${this.loadId}">${this.label}</label>
       <input id="${this.loadId}" .value="${this.value}" type="text">

@@ -9608,19 +9608,19 @@ export class FwLogo extends LitElement {
   }
 
   _highlightCSS() {
-    if(this.highlights) {
+    if (this.highlights) {
       const hightlightCSS = this.highlights.reduce((acc, h) => {
         if (['employee', 'investor', 'lancer', 'business'].includes(h)) {
-          return `${acc} :host [class*="${h}"] { opacity: 1; } ${ this.showLabel ? `:host [class*="${h}"] .text { opacity: 1; display: block !important; }` : '' }
+          return `${acc} :host [class*="${h}"] { opacity: 1; } ${this.showLabel ? `:host [class*="${h}"] .text { opacity: 1; display: block !important; }` : ''}
   `;
         }
         let highlightAdditive = '';
         if (h === 'iga' && !this.highlights.includes('income')) {
-          highlightAdditive += `:host [class*="income"] { opacity: 0.9; transition: width 1s, height 1s, border-width 1s, opacity 1s; } :host [class*="income"]:after { border-top-color: #c4c4c4; border-left-color: #c4c4c4; }`;
+          highlightAdditive += ':host [class*="income"] { opacity: 0.9; transition: width 1s, height 1s, border-width 1s, opacity 1s; } :host [class*="income"]:after { border-top-color: #c4c4c4; border-left-color: #c4c4c4; }';
         }
 
         if (h === 'liabilities' && !this.highlights.includes('expense')) {
-          highlightAdditive += `:host [class*="expense"] { opacity: 0.9; transition: width 1s, height 1s, border-width 1s, opacity 1s; } :host [class*="expense"]:after { border-bottom-color: #999999; border-right-color: #999999; }`;
+          highlightAdditive += ':host [class*="expense"] { opacity: 0.9; transition: width 1s, height 1s, border-width 1s, opacity 1s; } :host [class*="expense"]:after { border-bottom-color: #999999; border-right-color: #999999; }';
         }
 
         if (h === 'savings' && !this.highlights.includes('liabilities')) {
@@ -9635,21 +9635,21 @@ export class FwLogo extends LitElement {
           `;
         }
 
-        if(this.showLabel && ['quadrant', 'cash-flow'].includes(h)) {
+        if (this.showLabel && ['quadrant', 'cash-flow'].includes(h)) {
           return `${acc} :host [class*="${h}"], :host [class*="${h}"] * { opacity: 1; transition: width 1s, height 1s, border-width 1s, opacity 1s; } :host [class*="${h}"] .text { display: block !important; }`;
         }
 
-        return `${acc} :host [class*="${h}"], :host [class*="${h}"] * { opacity: 1; transition: width 1s, height 1s, border-width 1s, opacity 1s; } ${highlightAdditive} ${ this.showLabel ? `:host [class*="${h}"] .text { display: inline-block !important; }` : ''}
+        return `${acc} :host [class*="${h}"], :host [class*="${h}"] * { opacity: 1; transition: width 1s, height 1s, border-width 1s, opacity 1s; } ${highlightAdditive} ${this.showLabel ? `:host [class*="${h}"] .text { display: inline-block !important; }` : ''}
   `;
       }, '');
 
-    return this.highlights.length
-      ? `
+      return this.highlights.length
+        ? `
       .fw-wrapper * {
         opacity: 0.2;
       }
 
-      ${ this.showLabel ? `.fw-wrapper .text {
+      ${this.showLabel ? `.fw-wrapper .text {
         display: none;
       }` : ''}
 
@@ -9669,7 +9669,7 @@ export class FwLogo extends LitElement {
 
       ${hightlightCSS}
     `
-      : '';
+        : '';
     }
 
     return '';
@@ -9708,8 +9708,7 @@ export class FwLogo extends LitElement {
 
   // eslint-disable-next-line class-methods-use-this
   _getArrowPosition(className, positionTop) {
-    const arrowDirection =
-      className === 'sav-inv' ? 'arrow-bottom-left' : 'arrow-top-right';
+    const arrowDirection = className === 'sav-inv' ? 'arrow-bottom-left' : 'arrow-top-right';
     let top = ((225 * (positionTop * 0.5)) / 100) - 10;
     let size = 50;
     let borderWidth = 8;
@@ -9729,30 +9728,32 @@ export class FwLogo extends LitElement {
         .${arrowDirection}.${className} {
           display: block;
           transform: ${
-            className === 'sav-inv'
-              ? `translate(-${top}px, ${top}px);`
-              : `translate(${top}px, -${top}px);`
-          }
+  className === 'sav-inv'
+    ? `translate(-${top}px, ${top}px);`
+    : `translate(${top}px, -${top}px);`
+}
           height: ${size}px;
           width: ${size}px;
           border-width: ${
-            className === 'sav-inv'
-              ? `0 0 ${borderWidth}px ${borderWidth}px;`
-              : `${borderWidth}px ${borderWidth}px 0 0;`
-          };
+  className === 'sav-inv'
+    ? `0 0 ${borderWidth}px ${borderWidth}px;`
+    : `${borderWidth}px ${borderWidth}px 0 0;`
+};
         }
 
         ${
-          className !== 'sav-inv'
-            ? `.${arrowDirection}.${className}::before {
+  className !== 'sav-inv'
+    ? `.${arrowDirection}.${className}::before {
           top: ${arrowTop}px;
           right: -${arrowRight}px;
         }`
-            : ''
-        }
+    : ''
+}
       `;
 
-    return { top, size, borderWidth, arrowTop, arrowRight, outputCss };
+    return {
+      top, size, borderWidth, arrowTop, arrowRight, outputCss,
+    };
   }
 
   _getResidueSize(cfName) {
@@ -9809,9 +9810,9 @@ export class FwLogo extends LitElement {
     }
 
     if (
-      liabilities >= minWidth &&
-      iga >= minWidth &&
-      liabilitiesPos >= income + minWidth
+      liabilities >= minWidth
+      && iga >= minWidth
+      && liabilitiesPos >= income + minWidth
     ) {
       flowsCSS += this._getArrowCSS('inv-liab', iga, liabilities);
     }
@@ -9821,16 +9822,16 @@ export class FwLogo extends LitElement {
     }
 
     if (
-      Number(this.income) >
-        Number(this.liabilities) + Number(this.expense) + minWidth &&
-      savings >= minWidth
+      Number(this.income)
+        > Number(this.liabilities) + Number(this.expense) + minWidth
+      && savings >= minWidth
     ) {
       flowsCSS += this._getArrowCSS('inc-sav', income, savings);
     }
 
     if (
-      100 - Number(this.income) >= minWidth &&
-      100 - (Number(this.liabilities) + Number(this.expense)) >= minWidth
+      100 - Number(this.income) >= minWidth
+      && 100 - (Number(this.liabilities) + Number(this.expense)) >= minWidth
     ) {
       flowsCSS += this._getArrowCSS('inv-sav', iga, savings);
       flowsCSS += this._getArrowCSS('sav-inv', savings, iga);
@@ -9865,47 +9866,46 @@ export class FwLogo extends LitElement {
   }
 
   render() {
-    const fsqTag =
-      this.employee || this.lancer || this.business || this.investor
-        ? `
+    const fsqTag = this.employee || this.lancer || this.business || this.investor
+      ? `
         .fw-wrapper .financial-stage:after {
           top: -${String(20 + (this.investor + this.business) * 2).trim()}px;
           border-top: ${String(
-            20 + (this.investor + this.business) * 2
-          ).trim()}px solid white;
+    20 + (this.investor + this.business) * 2,
+  ).trim()}px solid white;
           border-bottom: ${String(
-            20 + (this.employee + this.lancer) * 2
-          ).trim()}px solid white;
+    20 + (this.employee + this.lancer) * 2,
+  ).trim()}px solid white;
         }
 
         .fw-wrapper .financial-stage:before {
           left: -${String(20 + (this.investor + this.lancer) * 2).trim()}px;
           border-left: ${String(
-            20 + (this.investor + this.lancer) * 2
-          ).trim()}px solid white;
+    20 + (this.investor + this.lancer) * 2,
+  ).trim()}px solid white;
           border-right: ${String(
-            20 + (this.employee + this.business) * 2
-          ).trim()}px solid white;
+    20 + (this.employee + this.business) * 2,
+  ).trim()}px solid white;
         }
     `
-        : '';
+      : '';
 
     return html`
       <style>
         ${!this.showLabel ? html`.text { display: none !important; }` : ''}
         ${!this.showFlows
-          ? html`[class*="arrow-"] { display: none !important; }`
-          : ''}
-        ${(this.income <= 10 && this.expense <= 10) ||
-        this.income <= 20 ||
-        this.expense <= 20
-          ? html`.cash-flow { width: 20px !important; height: 20px !important; }`
-          : ''}
+    ? html`[class*="arrow-"] { display: none !important; }`
+    : ''}
+        ${(this.income <= 10 && this.expense <= 10)
+        || this.income <= 20
+        || this.expense <= 20
+    ? html`.cash-flow { width: 20px !important; height: 20px !important; }`
+    : ''}
         ${fsqTag}
         ${this._highlightCSS()}
         ${this.showFlows ? this._getFlowsCSS() : ''}
       </style>
-      ${ this.showLogs ?  html`
+      ${this.showLogs ? html`
       <pre>
 Income Generating Assets: ${100 - this.income}
 Savings: ${100 - this.expense - this.liabilities}
@@ -9914,7 +9914,7 @@ Expense: ${this.expense}
 Liabilities: ${this.liabilities}
 Stage: ${this._getFinancialStage()}
 Flows: ${this.flows && this.flows.toString()}
-        </pre>` : '' }
+        </pre>` : ''}
       <div id="fw" class="fw-wrapper ${this._getFinancialStage()}">
         <div class="cf-quadrant absolute-center">
           <div class="${this._quadrantSize('employee')} quadrant">
@@ -9937,8 +9937,8 @@ Flows: ${this.flows && this.flows.toString()}
         <div
           id="ai"
           class="${this._cashItemSize(
-            'active-income'
-          )} cash-item absolute-center"
+    'active-income',
+  )} cash-item absolute-center"
         >
           <div class="text">Active Income</div>
         </div>
@@ -9953,8 +9953,8 @@ Flows: ${this.flows && this.flows.toString()}
         <div
           id="ei"
           class="${this._cashItemSize(
-            'expense'
-          )} expense cash-item absolute-center"
+    'expense',
+  )} expense cash-item absolute-center"
         >
           <div class="text">Expense</div>
         </div>

@@ -7,12 +7,7 @@ class Tabs extends ChotaElement {
     };
   }
 
-  constructor() {
-    super();
-  }
-
   render() {
-
     return html`
       <nav class="tabs is-full">
         ${(this.tabs || []).map((tab) => html`
@@ -23,10 +18,10 @@ class Tabs extends ChotaElement {
   }
 
   handleClick(id) {
-    const event = new CustomEvent("tabSelect", {
+    const event = new CustomEvent('tabSelect', {
       detail: {
         id: id,
-      }
+      },
     });
     this.dispatchEvent(event);
   }
