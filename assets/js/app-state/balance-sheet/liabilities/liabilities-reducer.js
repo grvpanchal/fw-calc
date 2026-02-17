@@ -14,7 +14,7 @@ const liabilitiesReducer = (state = INITIAL_STATE, action) => {
     case UPDATE_LIABILITY:
       return state.map((liab) => (liab.id === action.payload.id ? action.payload : liab));
     case REMOVE_LIABILITY:
-      return state.filter((liab) => liab.id !== action.payload.id);
+      return state.filter((liab) => liab.id !== action.payload);
     default:
       return state;
   }

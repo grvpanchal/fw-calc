@@ -8,12 +8,8 @@ const INITIAL_STATE = initialState.wealth;
 const wealthReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UPDATE_WEALTH:
-      return state.map((wealthItem) => {
-        if (wealthItem && wealthItem.date === action.payload.date) {
-          return action.payload;
-        }
-        return wealthItem;
-      });
+      // Replace entire wealth timeline with new projection
+      return action.payload;
     default:
       return state;
   }

@@ -15,7 +15,7 @@ const incomesReducer = (state = INITIAL_STATE, action) => {
     case UPDATE_INCOME:
       return state.map((inc) => (inc.id === action.payload.id ? action.payload : inc));
     case REMOVE_INCOME:
-      return state.filter((inc) => inc.id !== action.payload.id);
+      return state.filter((inc) => inc.id !== action.payload);
     case TEST_INCOME:
       console.log('action TEST_INCOME', action);
       return state;

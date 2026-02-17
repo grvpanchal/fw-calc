@@ -14,7 +14,7 @@ const assetsReducer = (state = INITIAL_STATE, action) => {
     case UPDATE_ASSET:
       return state.map((ass) => (ass.id === action.payload.id ? action.payload : ass));
     case REMOVE_ASSET:
-      return state.filter((ass) => ass.id !== action.payload.id);
+      return state.filter((ass) => ass.id !== action.payload);
     default:
       return state;
   }
