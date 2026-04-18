@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import './fw-logo.js';
 
 class WealthDashboard extends LitElement {
@@ -8,6 +8,14 @@ class WealthDashboard extends LitElement {
       expense: { type: Number },
       liabilities: { type: Number },
     };
+  }
+
+  static get styles() {
+    return css`
+      :host {
+        display: block;
+      }
+    `;
   }
 
   constructor() {
