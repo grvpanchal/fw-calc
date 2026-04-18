@@ -243,7 +243,11 @@ class AppShell extends connect(store)(LitElement) {
   }
 
   handleExpenseUpdateEvent(e) {
-    const { expense, value } = e.detail;
+    const { expense, field = 'amount', value } = e.detail;
+    if (field === 'name') {
+      store.dispatch(updateExpense({ ...expense, name: value }));
+      return;
+    }
     this.handleExpenseUpdate(expense, { target: { value } });
   }
 

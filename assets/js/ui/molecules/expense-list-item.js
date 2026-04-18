@@ -12,9 +12,17 @@ class ExpenseListItem extends LitElement {
     this.expense = {};
   }
 
-  handleInput(e) {
+  handleAmountInput(e) {
     this.dispatchEvent(new CustomEvent('expense-update', {
-      detail: { expense: this.expense, value: e.target.value },
+      detail: { expense: this.expense, field: 'amount', value: e.target.value },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
+  handleNameInput(e) {
+    this.dispatchEvent(new CustomEvent('expense-update', {
+      detail: { expense: this.expense, field: 'name', value: e.target.value },
       bubbles: true,
       composed: true,
     }));
@@ -33,12 +41,21 @@ class ExpenseListItem extends LitElement {
       <link rel="stylesheet" href="https://unpkg.com/chota@latest">
       <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
         <div style="flex: 1;">
-          <label for="expense-${this.expense.id}">${this.expense.name}</label>
-          <input 
-            id="expense-${this.expense.id}" 
-            type="text" 
-            value="${this.expense.amount}" 
-            @input=${this.handleInput}
+          <input
+            id="expense-name-${this.expense.id}"
+            type="text"
+            .value="${this.expense.name || ''}"
+            @input=${this.handleNameInput}
+            placeholder="Expense name"
+            aria-label="Expense name"
+            style="border: none; background: transparent; padding: 0; margin-bottom: 2px; font-weight: 600; width: 100%; outline: none;"
+          >
+          <input
+            id="expense-${this.expense.id}"
+            type="text"
+            value="${this.expense.amount}"
+            @input=${this.handleAmountInput}
+            aria-label="Expense amount"
           >
           <small class="text-grey">${this.expense.helperText}</small>
         </div>
