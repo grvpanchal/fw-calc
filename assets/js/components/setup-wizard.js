@@ -56,26 +56,53 @@ class SetupWizard extends connect(store)(LitElement) {
         display: flex;
         justify-content: space-between;
         margin-bottom: 2rem;
+        gap: 0.25rem;
       }
 
       .step {
         flex: 1;
+        min-width: 0;
         text-align: center;
         padding: 0.5rem;
         border-bottom: 3px solid #ddd;
         color: #999;
         font-size: 0.9em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .step.active {
         border-bottom-color: #4CAF50;
         color: #4CAF50;
         font-weight: bold;
+        flex: 2;
       }
 
       .step.completed {
         border-bottom-color: #4CAF50;
         color: #333;
+      }
+
+      @media (max-width: 600px) {
+        .modal-content {
+          padding: 1rem;
+          width: 95%;
+          max-height: 90vh;
+        }
+
+        .wizard-steps {
+          margin-bottom: 1.25rem;
+        }
+
+        .step {
+          padding: 0.4rem 0.2rem;
+          font-size: 0.8em;
+        }
+
+        .step:not(.active) .step-label {
+          display: none;
+        }
       }
 
       .entry-list {
@@ -459,7 +486,7 @@ class SetupWizard extends connect(store)(LitElement) {
       <div class="wizard-steps">
         ${steps.map((step, index) => html`
           <div class="step ${this.currentStep === index + 1 ? 'active' : ''} ${this.currentStep > index + 1 ? 'completed' : ''}">
-            ${index + 1}. ${step}
+            <span class="step-number">${index + 1}</span><span class="step-label">. ${step}</span>
           </div>
         `)}
       </div>
