@@ -105,6 +105,10 @@ class AppShell extends connect(store)(LitElement) {
   }
 
   handleAssetUpdate(asset, field, event) {
+    if (field === 'name') {
+      store.dispatch(updateAsset({ ...asset, name: event.target.value }));
+      return;
+    }
     const newValue = Math.max(0, parseFloat(event.target.value) || 0);
     store.dispatch(updateAsset({
       ...asset,
@@ -114,6 +118,10 @@ class AppShell extends connect(store)(LitElement) {
   }
 
   handleLiabilityUpdate(liability, field, event) {
+    if (field === 'name') {
+      store.dispatch(updateLiability({ ...liability, name: event.target.value }));
+      return;
+    }
     let newValue;
     if (field === 'startDate') {
       newValue = event.target.value;
