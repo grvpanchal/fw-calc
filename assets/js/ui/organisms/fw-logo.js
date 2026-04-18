@@ -22,14 +22,17 @@ export class FwLogo extends LitElement {
         display: block;
         width: 100%;
         max-width: 600px;
+        min-width: 0;
         aspect-ratio: 1 / 1;
+        overflow: hidden;
       }
 
       .fw-wrapper {
         width: 600px;
         height: 600px;
         position: relative;
-        zoom: var(--fw-logo-zoom, 1);
+        transform: scale(var(--fw-logo-scale, 1));
+        transform-origin: top left;
       }
 
       .fw-wrapper .absolute-center {
@@ -9616,7 +9619,7 @@ export class FwLogo extends LitElement {
     this._resizeObserver = new ResizeObserver((entries) => {
       const { width } = entries[0].contentRect;
       if (width > 0) {
-        this.style.setProperty('--fw-logo-zoom', String(width / 600));
+        this.style.setProperty('--fw-logo-scale', String(width / 600));
       }
     });
     this._resizeObserver.observe(this);
