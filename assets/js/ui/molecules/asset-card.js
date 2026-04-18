@@ -30,6 +30,14 @@ class AssetCard extends LitElement {
     }));
   }
 
+  handleNameUpdate(e) {
+    this.dispatchEvent(new CustomEvent('asset-update', {
+      detail: { asset: this.asset, field: 'name', value: e.target.value },
+      bubbles: true,
+      composed: true,
+    }));
+  }
+
   handleRemove() {
     this.dispatchEvent(new CustomEvent('asset-remove', {
       detail: { id: this.asset.id },
@@ -44,8 +52,17 @@ class AssetCard extends LitElement {
       <link rel="stylesheet" href="https://unpkg.com/chota@latest">
       <div style="border: 1px solid ${isInvestment ? '#4CAF50' : '#ddd'}; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; ${isInvestment ? 'background: #f1f8e9;' : ''}">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h5>${this.asset.name}</h5>
+          <div style="flex: 1; min-width: 0;">
+            ${this.disabled ? html`<h5>${this.asset.name}</h5>` : html`
+              <input
+                type="text"
+                .value="${this.asset.name || ''}"
+                @input=${this.handleNameUpdate}
+                placeholder="Asset name"
+                aria-label="Asset name"
+                style="border: none; background: transparent; padding: 0; margin: 0; font-size: 1.5rem; font-weight: 600; width: 100%; outline: none;"
+              >
+            `}
             ${isInvestment ? html`<small style="color: #558b2f;">📊 Investment Portfolio</small>` : ''}
           </div>
           ${!this.disabled ? html`

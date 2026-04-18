@@ -38,8 +38,19 @@ class LiabilityCard extends LitElement {
     return html`
       <link rel="stylesheet" href="https://unpkg.com/chota@latest">
       <div style="border: 1px solid #ddd; padding: 1rem; margin-bottom: 1rem; border-radius: 4px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h5>${this.liability.name}</h5>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;">
+          <div style="flex: 1; min-width: 0;">
+            ${this.disabled ? html`<h5>${this.liability.name}</h5>` : html`
+              <input
+                type="text"
+                .value="${this.liability.name || ''}"
+                @input=${(e) => this.handleUpdate('name', e)}
+                placeholder="Liability name"
+                aria-label="Liability name"
+                style="border: none; background: transparent; padding: 0; margin: 0; font-size: 1.5rem; font-weight: 600; width: 100%; outline: none;"
+              >
+            `}
+          </div>
           ${!this.disabled ? html`
             <button 
               class="button error" 
