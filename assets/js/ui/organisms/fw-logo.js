@@ -19,13 +19,17 @@ export class FwLogo extends LitElement {
       :host {
         font-family: sans-serif;
         transition: 0.35s;
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        aspect-ratio: 1 / 1;
       }
 
       .fw-wrapper {
         width: 600px;
         height: 600px;
         position: relative;
-        zoom: 1;
+        zoom: var(--fw-logo-zoom, 1);
       }
 
       .fw-wrapper .absolute-center {
@@ -9605,6 +9609,25 @@ export class FwLogo extends LitElement {
     this.investor = 0;
     this.highlights = [];
     this.showLabel = false;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._resizeObserver = new ResizeObserver((entries) => {
+      const { width } = entries[0].contentRect;
+      if (width > 0) {
+        this.style.setProperty('--fw-logo-zoom', String(width / 600));
+      }
+    });
+    this._resizeObserver.observe(this);
+  }
+
+  disconnectedCallback() {
+    if (this._resizeObserver) {
+      this._resizeObserver.disconnect();
+      this._resizeObserver = null;
+    }
+    super.disconnectedCallback();
   }
 
   _highlightCSS() {
