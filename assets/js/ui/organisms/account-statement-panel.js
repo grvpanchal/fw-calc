@@ -1,10 +1,12 @@
-import { LitElement, html } from 'lit-element';
+import { LitElement, html, css } from 'lit-element';
 import '../molecules/app-tabs.js';
 import '../molecules/income-list-item.js';
 import '../molecules/expense-list-item.js';
 import '../molecules/passive-income-item.js';
 import '../molecules/liability-emi-item.js';
 import '../molecules/wealth-stats-panel.js';
+
+const SLIDER_HINT_KEY = 'sliderHintSeen';
 
 class AccountStatementPanel extends LitElement {
   static get properties() {
@@ -20,7 +22,46 @@ class AccountStatementPanel extends LitElement {
       dateIndex: { type: Number },
       maxDateIndex: { type: Number },
       wealthSnapshot: { type: Object },
+      showSliderHint: { type: Boolean, state: true },
     };
+  }
+
+  static get styles() {
+    return css`
+      .slider-hint {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 0.85rem;
+        margin: 0.5rem 0 0.25rem;
+        background: #fff8e1;
+        border-left: 4px solid #ffb300;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: #6b4c00;
+        animation: slider-hint-bounce 1.8s ease-in-out infinite;
+      }
+
+      .slider-hint svg {
+        flex-shrink: 0;
+      }
+
+      @keyframes slider-hint-bounce {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(4px); }
+      }
+
+      .slider.slider-highlighted {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5);
+        animation: slider-pulse 1.8s ease-in-out infinite;
+        border-radius: 6px;
+      }
+
+      @keyframes slider-pulse {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.5); }
+        50% { box-shadow: 0 0 0 8px rgba(76, 175, 80, 0); }
+      }
+    `;
   }
 
   constructor() {
@@ -36,6 +77,7 @@ class AccountStatementPanel extends LitElement {
     this.dateIndex = 0;
     this.maxDateIndex = 0;
     this.wealthSnapshot = {};
+    this.showSliderHint = !localStorage.getItem(SLIDER_HINT_KEY);
   }
 
   calculateAssetPassiveIncome(asset) {
@@ -62,6 +104,10 @@ class AccountStatementPanel extends LitElement {
   }
 
   handleRangeInput(e) {
+    if (this.showSliderHint) {
+      localStorage.setItem(SLIDER_HINT_KEY, '1');
+      this.showSliderHint = false;
+    }
     this.dispatchEvent(new CustomEvent('date-change', {
       detail: { dateIndex: Number(e.target.value) },
       bubbles: true,
@@ -133,15 +179,24 @@ class AccountStatementPanel extends LitElement {
       <link rel="stylesheet" href="https://unpkg.com/chota@latest">
       <div style="min-height: 600px;">
         <div>Date: ${this.currentDate}</div>
+        ${this.showSliderHint && this.maxDateIndex > 0 ? html`
+          <div class="slider-hint" role="status">
+            <img src="https://icongr.am/feather/trending-up.svg?size=18&color=6b4c00" alt="" />
+            <span>
+              <strong>Tip:</strong> Drag the slider below to preview your finances month-by-month over the next 30 years.
+            </span>
+          </div>
+        ` : ''}
         <div class="slidecontainer">
-          <input 
-            type="range" 
-            min="0" 
-            max="${String(this.maxDateIndex)}" 
+          <input
+            type="range"
+            min="0"
+            max="${String(this.maxDateIndex)}"
             value=${this.dateIndex}
-            class="slider"
+            class="slider ${this.showSliderHint ? 'slider-highlighted' : ''}"
             @input=${this.handleRangeInput}
             id="myRange"
+            aria-label="Projection month"
           >
         </div>
         <wealth-stats-panel
